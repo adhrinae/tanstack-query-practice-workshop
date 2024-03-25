@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ngneat/falso": "^7.2.0",
     "@tanstack/react-query": "^5.28.6",
     "@unocss/reset": "^0.58.6",
     "react": "^18.2.0",
@@ -21,6 +22,7 @@
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "@unocss/eslint-config": "^0.58.6",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
