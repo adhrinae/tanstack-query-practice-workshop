@@ -2,13 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Spinner } from './Spinner'
 import { Link } from 'wouter'
-import { getPosts } from '~/api/posts'
+import { postsQueryOptions } from './queryOptions'
 
 export function Sidebar({ className }: { className?: string }) {
-  const { data: posts, isLoading, isError } = useQuery({
-    queryKey: ['posts'],
-    queryFn: () => getPosts(),
-  })
+  const { data: posts, isLoading, isError } = useQuery(postsQueryOptions())
 
   let content: ReactNode = null
 

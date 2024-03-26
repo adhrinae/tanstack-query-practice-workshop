@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@ngneat/falso": "^7.2.0",
-    "@tanstack/react-query": "^5.28.6",
+    "@tanstack/react-query": "^5.28.8",
+    "@tanstack/react-query-devtools": "^5.28.8",
     "@unocss/reset": "^0.58.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

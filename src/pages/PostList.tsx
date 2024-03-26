@@ -1,17 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import type { BlogPost } from '~/api/types'
-import { getPosts } from '~/api/posts'
 import { Spinner } from '~/shared/Spinner'
 import { Link } from 'wouter'
+import { postsQueryOptions } from '~/shared/queryOptions'
 
 export function PostList() {
-  const query = useQuery({
-    queryKey: ['posts'],
-    queryFn: () => getPosts(),
-    staleTime: 5000, // determines how long to use the cache before refetching
-    // gcTime: 60000, // determines how long to keep the unused/inactive cache data remains in memory
-    // refetchInterval: 3000, // refetches every 3 seconds
-  })
+  const query = useQuery(postsQueryOptions())
 
   // Try to change `isLoading` to `isFetching` and see the difference
   if (query.isLoading) {
