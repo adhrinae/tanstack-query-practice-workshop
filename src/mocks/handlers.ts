@@ -1,4 +1,4 @@
-import { HttpResponse, delay, http, type DefaultBodyType } from 'msw'
+import { HttpResponse, delay, http, type DefaultBodyType, type PathParams } from 'msw'
 import { randFullName, randCatchPhrase, randParagraph, randPastDate, randRecentDate } from '@ngneat/falso'
 import type { BlogPost, User } from '~/api/types'
 
@@ -74,5 +74,27 @@ export const handlers = [
     await delay('real')
 
     return HttpResponse.json(comments)
+  }),
+  http.post<
+    PathParams,
+    { title: string, content: string, authorId: number }
+  >('/api/posts', async ({ request }) => {
+    const body = await request.json()
+
+    const newPostId = posts.length + 1
+    const newPostDate = new Date().toISOString()
+
+    const createdPost: BlogPost = {
+      id: newPostId,
+      createdAt: newPostDate,
+      updatedAt: newPostDate,
+      ...body,
+    }
+
+    posts.unshift(createdPost)
+
+    await delay('real')
+
+    return HttpResponse.json(createdPost)
   }),
 ]
