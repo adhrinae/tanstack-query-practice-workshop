@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import type { BlogPost } from '~/api/types'
-import { getPosts } from './api/posts'
-import { Spinner } from './Spinner'
+import { getPosts } from '~/api/posts'
+import { Spinner } from '~/shared/Spinner'
+import { Link } from 'wouter'
 
 export function PostList() {
   const query = useQuery({
@@ -42,7 +43,10 @@ function PostItem({ post }: { post: BlogPost }) {
   return (
     <div className="rounded-lg bg-white p-4 shadow-lg">
       <h2 className="text-xl font-bold">{post.title}</h2>
-      <p className="mt-2">{post.content.slice(0, 100)}</p>
+      <p className="my-2">{post.content.slice(0, 100)}</p>
+      <Link href={`/posts/${post.id}`} className="text-blue-500">
+        Read more
+      </Link>
     </div>
   )
 }
