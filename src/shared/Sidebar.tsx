@@ -29,7 +29,7 @@ export function Sidebar({ className }: { className?: string }) {
     content = (
       <ul>
         {posts.map(post => (
-          <li key={post.id}>
+          <li key={post.id} className="my-2">
             <Link href={`/posts/${post.id}`} className="text-blue-600">{post.title}</Link>
           </li>
         ))}
