@@ -16,11 +16,22 @@ const posts = Array.from({ length: 10 }, (_, index) => ({
   updatedAt: randRecentDate().toISOString(),
 }))
 
+let postsRefetchCount = 0
+
 export const handlers = [
   http.get('/api/users', () => {
     return HttpResponse.json<User[]>(users)
   }),
-  http.get('/api/posts', () => {
+  http.get('/api/posts', (res) => {
+    const url = new URL(res.request.url)
+    const invokeError = url.searchParams.has('error')
+
+    if (invokeError && postsRefetchCount < 2) {
+      postsRefetchCount += 1
+      return HttpResponse.error()
+    }
+
+    postsRefetchCount = 0
     return HttpResponse.json<BlogPost[]>(posts)
   }),
 ]
