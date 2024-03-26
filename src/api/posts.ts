@@ -1,7 +1,23 @@
 import type { BlogPost } from './types'
 
-export function getPosts(invokeError = false): Promise<BlogPost[]> {
-  return fetch(`/api/posts${invokeError ? '?error' : ''}`).then(res => res.json())
+export function getPosts({
+  invokeError,
+  page,
+}: {
+  invokeError?: boolean
+  page?: number
+}): Promise<BlogPost[]> {
+  const searchParams = new URLSearchParams()
+
+  if (invokeError) {
+    searchParams.set('error', '')
+  }
+
+  if (page) {
+    searchParams.set('page', page.toString())
+  }
+
+  return fetch(`/api/posts?${searchParams}`).then(res => res.json())
 }
 
 export function getPost(id: number): Promise<BlogPost> {

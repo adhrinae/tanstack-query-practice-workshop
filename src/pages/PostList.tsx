@@ -3,9 +3,11 @@ import type { BlogPost } from '~/api/types'
 import { Spinner } from '~/shared/Spinner'
 import { Link } from 'wouter'
 import { postsQueryOptions } from '~/shared/queryOptions'
+import { useState } from 'react'
 
 export function PostList() {
-  const query = useQuery(postsQueryOptions())
+  const [page, setPage] = useState<1 | 2>(1)
+  const query = useQuery(postsQueryOptions({ page }))
 
   // Try to change `isLoading` to `isFetching` and see the difference
   if (query.isLoading) {
@@ -29,6 +31,25 @@ export function PostList() {
       {(query?.data ?? []).map(post => (
         <PostItem key={post.id} post={post} />
       ))}
+      <div className="flex justify-between">
+        <button
+          onClick={() => setPage(1)}
+          className={`rounded px-4 py-2 ${page === 1 ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+        >
+          Page 1
+        </button>
+        {query.isPlaceholderData && (
+          <div className="flex space-x-4">
+            Keeping placeholder data
+          </div>
+        )}
+        <button
+          onClick={() => setPage(2)}
+          className={`rounded px-4 py-2 ${page === 2 ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+        >
+          Page 2
+        </button>
+      </div>
     </div>
   )
 }

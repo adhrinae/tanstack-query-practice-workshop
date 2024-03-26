@@ -46,8 +46,19 @@ export const handlers = [
       return HttpResponse.error()
     }
 
+    const page = url.searchParams.get('page')
+    let postsResponse = [...posts]
+    if (page) {
+      const postsPerPage = 5
+      const pageInt = page ? parseInt(page, 10) : 1
+      const start = (pageInt - 1) * postsPerPage
+      const end = start + postsPerPage
+
+      postsResponse = posts.slice(start, end)
+    }
+
     postsRefetchCount = 0
-    return HttpResponse.json<BlogPost[]>(posts)
+    return HttpResponse.json<BlogPost[]>(postsResponse)
   }),
   http.get<{ id: string }>('/api/posts/:id', async ({ params }) => {
     const postId = parseInt(params.id, 10)
